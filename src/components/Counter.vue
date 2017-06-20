@@ -1,53 +1,64 @@
 <template>
   <div class="count">
-    <h1>{{ count }}</h1>
-    <button @click='increase()'>Increase</button>
+    <h1>{{ obj.count1 }} & {{ obj.count2 }}</h1>
+    <button @click='increase1()'>Increase 1</button>
+    <button @click='increase2()'>Increase 2</button>
+
     <br>
-    <button @click='badFunc()'>badFunc</button>
-    <br>
-    <button @click='printThis()'>print "this" in console</button>
+    <button @click='testDefineProperty()'>testDefineProperty</button>
   </div>
 </template>
 
 <script>
-// Object literals
-// { func(){ } } ---> { func: function(){ } }
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#Enhanced_Object_literals
 import Vue from 'vue';
+
+function Archiver() {
+  var temperature = null;
+  var archive = [];
+
+  Object.defineProperty(this, 'temperature', {
+    get: function() {
+      console.log('get!');
+      return temperature;
+    },
+    set: function(value) {
+      temperature = value;
+      archive.push({ val: temperature });
+    }
+  });
+
+  this.getArchive = function() { return archive; };
+}
+var globalVars = new Archiver();
 
 export default {
   name: 'count',
   data() {
     return {
-      count: 1
+      count: 1,
+      obj: {
+        count1: 1,
+      },
     }
   },
   methods: {
-    increase() {
-      this.count += 1;
+    testDefineProperty() {
+      console.log('-----before')
+      console.log(globalVars.getArchive());
+      globalVars.temperature = globalVars.getArchive().length;
+      console.log('-----after')
+      console.log(globalVars.getArchive());
+      console.log('')
     },
-    badFunc: () => { // arrow function won't work
-      debugger;
-      this.count += 1;
+    increase1() {
+      this.obj.count1 += 1;
     },
-    printThis() {
-      debugger;
-      console.log(this);
-      // VueComponent
-      //   --> count, countAlias, increase, badFunc, printThis
-
-      console.log(Vue.lodash);
-      console.log(Vue.prototype);
-      // prototype_chain
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain#With_a_constructor
-      // http://thinkingincrowd.u.qiniudn.com/JS_prototype_chain.png
-      console.log(Vue.prototype === this.__proto__.__proto__);
+    increase2() {
+      // https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
+      this.obj.count2 = (this.obj.count2 || 1) + 1;
+      // this.obj = Object.assign({}, this.obj);
+      // this.$forceUpdate(); 
     },
-  },
-  computed: {
-    countAlias() {
-      return this.count;
-    }
   },
 }
 </script>
