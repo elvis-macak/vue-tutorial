@@ -6,19 +6,26 @@
 </template>
 
 <script>
+// Object literals
+// { func(){ } } ---> { func: function(){ } }
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_types#Enhanced_Object_literals
+
 export default {
   name: 'count',
-  data: function () {
+  data() {
     return {
       count: 1
     }
   },
   methods: {
-    increase: function () {
+    increase() {
       this.count += 1;
-    }
+    },
+    badFunc: () => { // arrow function won't work
+      this.count += 1;
+    },
   },
-  mounted: function () {
+  mounted() {
 
   },
 }
