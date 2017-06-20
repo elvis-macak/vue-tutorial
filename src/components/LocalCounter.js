@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-export default {
+export default Vue.extend({
   template: `
   <div class="count">
     <h1>{{ count }}</h1>
@@ -20,10 +20,9 @@ export default {
   mounted: function () {
 
   },
-}
+})
 
 // NOTE
 // 1. export a detault object is like create a Vue instance
 // 2. methods/computed are object
 //    data/mounted are functions
-//
