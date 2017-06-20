@@ -2,7 +2,10 @@
   <div id="app">
     <div>
       Counter
-      <counter></counter>
+      <counter v-if="counterStatus"></counter>
+      <!--<counter v-show="counterStatus"></counter>-->
+      <br>
+      <button @click="toggleCounter()">Toggle Counter</button>
     </div>
   </div>
 </template>
@@ -14,6 +17,14 @@ export default {
   name: 'app',
   components: {
     'counter': Counter,
+  },
+  data() {
+    return { counterStatus: false }
+  },
+  methods: {
+    toggleCounter() {
+      this.counterStatus = !this.counterStatus;
+    }
   }
 }
 </script>
