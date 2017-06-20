@@ -3,7 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 
+import LodashPlugin from './plugin'
+Vue.use(LodashPlugin)
+
 Vue.config.productionTip = false
+
 
 /* eslint-disable no-new */
 new Vue({
