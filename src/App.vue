@@ -1,11 +1,10 @@
 <template>
   <div id="app">
     <div>
-      Counter
-      <counter v-if="counterStatus"></counter>
-      <!--<counter v-show="counterStatus"></counter>-->
+      <counter :propCount="count" @increment="count=$event"></counter>
+      <counter :propCount="count" @increment="count=$event"></counter>
+      <counter :propCount="count" @increment="count=$event"></counter>
       <br>
-      <button @click="toggleCounter()">Toggle Counter</button>
     </div>
   </div>
 </template>
@@ -19,13 +18,10 @@ export default {
     'counter': Counter,
   },
   data() {
-    return { counterStatus: false }
-  },
-  methods: {
-    toggleCounter() {
-      this.counterStatus = !this.counterStatus;
+    return { 
+      count: 0,
     }
-  }
+  },
 }
 </script>
 
